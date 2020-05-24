@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 import { Injectable, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
-=======
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
->>>>>>> 014e8c9f718ab5c991e6df20d62593b4f876f9db
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { IUser } from './user.model';
+import { IUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class UserService {
@@ -25,7 +21,7 @@ export class UserService {
       return newUser;
     } catch (error) {
       console.log('ERROR', error)
-      throw new HttpException(`Can't register`, HttpStatus.NOT_FOUND)
+      throw new HttpException(`Can't register the user`, HttpStatus.NOT_FOUND)
     }
   }
 

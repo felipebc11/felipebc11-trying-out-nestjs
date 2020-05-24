@@ -5,8 +5,7 @@ import { ConfigModule} from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
-import { PersonController } from './person/person.controller';
-import { PersonService } from './person/person.service';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [
@@ -15,8 +14,9 @@ import { PersonService } from './person/person.service';
     MongooseModule.forRoot(
       `mongodb://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@localhost:27017`,
     ),
+    PersonModule,
   ],
-  controllers: [AppController, PersonController],
-  providers: [AppService, PersonService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
