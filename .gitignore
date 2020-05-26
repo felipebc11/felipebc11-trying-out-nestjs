@@ -36,4 +36,4 @@ lerna-debug.log*
 
 # Specifcs archives
 
-/src/auth/contants.ts
+/src/auth/constants.ts
