@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
-
+import { Controller, Get, Post, Body, Param, Patch, Delete, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { PersonService} from './person.service';
 
 @Controller('persons')
 export class PersonController {
   constructor(private readonly personsService : PersonService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('create')
   async addPerson(
     @Body('name') name: string,
@@ -18,11 +19,13 @@ export class PersonController {
     return {id: generateId._id};
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async getAll(){
     return this.personsService.fetchAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('findById/:id')
   async findOne(
     @Param('id') userId: string,
@@ -30,6 +33,7 @@ export class PersonController {
     return this.personsService.findOne(userId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch()
   async updatePerson(
     @Body('personId') personId: string,
@@ -40,6 +44,7 @@ export class PersonController {
     return this.personsService.updatePerson(personId, name, email, friend);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
   async deletePerson(
     @Param('id') personId: string,

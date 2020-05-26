@@ -1,11 +1,12 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
-
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UserService} from './user.service';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly usersService: UserService) {}
 
+  @UseGuards()
   @Post()
   async addUser(
     @Body('email') email: string,
@@ -20,9 +21,10 @@ export class UserController {
     return { id: generatedId._id};
   }
 
-  @Get(':id')
+  @UseGuards()
+  @Get('findByUsername')
   async findOne(
-    @Param('id') userId: string,
+    @Body('username') userId: string,
   ){
     return this.usersService.findOne(userId);
   }
