@@ -6,7 +6,7 @@ import { UserService} from './user.service';
 export class UserController {
   constructor(private readonly usersService: UserService) {}
 
-  @UseGuards()
+  @UseGuards(JwtAuthGuard)
   @Post()
   async addUser(
     @Body('email') email: string,
@@ -21,7 +21,7 @@ export class UserController {
     return { id: generatedId._id};
   }
 
-  @UseGuards()
+  @UseGuards(JwtAuthGuard)
   @Get('findByUsername')
   async findOne(
     @Body('username') userId: string,
