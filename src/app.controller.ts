@@ -8,7 +8,6 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req: any) {
-    console.log('messi',req.user);
     return this.authService.login(req.user);
   }
 }
