@@ -11,7 +11,7 @@ export class UserService {
     private readonly userModel: Model<IUser>,
   ) {}
 
-  async create(email: string, username: string, password: string){
+  readonly create = async (email: string, username: string, password: string): Promise<IUser> =>{
     try {
       const newUser = await this.userModel.create({
         email,
@@ -25,7 +25,7 @@ export class UserService {
     }
   }
 
-  async findOne(username: string): Promise<IUser>{
+  readonly findOne = async (username: string): Promise<IUser> =>{
     let user;
     try {
       user = await this.userModel.findOne({username: username}).exec();

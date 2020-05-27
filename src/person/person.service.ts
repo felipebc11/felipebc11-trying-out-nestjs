@@ -11,7 +11,7 @@ export class PersonService {
     private readonly personModel: Model<IPerson>,
   ){}
 
-  async create(name: string, email: string){
+  readonly create = async (name: string, email: string): Promise<IPerson> => {
     try {
       const newUser = await this.personModel.create({
         name,
@@ -24,7 +24,7 @@ export class PersonService {
     }
   }
 
-  async findOne(id: string): Promise<IPerson>{
+  readonly findOne = async (id: string): Promise<IPerson> => {
     let user;
     try {
       user = await this.personModel.findById(id).exec();
@@ -43,7 +43,7 @@ export class PersonService {
     return user;
   }
 
-  async fetchAll(): Promise<IPerson>{
+  readonly fetchAll = async (): Promise<IPerson> => {
     let people;
     try {
       people = await this.personModel.find().select();
@@ -53,12 +53,12 @@ export class PersonService {
     return people;
   }
 
-  async updatePerson(
+  readonly updatePerson = async (
     personId: string,
     name: string,
     email: string,
     friend: string,
-  ) {
+  ): Promise<any> => {
 
     try {
       const updatedPerson = await this.personModel.findById(personId);
@@ -82,7 +82,7 @@ export class PersonService {
     
   }
 
-  async removePerson(id: string){
+  readonly removePerson = async (id: string): Promise<any> => {
     const result = await this.personModel.deleteOne({_id: id});
     if(result.deletedCount>0) return {message: 'Sucess.'};
     throw new HttpException('No records found by this id.', HttpStatus.NOT_FOUND);

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -13,7 +13,7 @@ export class DrawService {
     private readonly personModel: Model<IPerson>,
   ) {}
 
-  readonly draw = async () => {
+  readonly draw = async (): Promise<any> => {
     const utils = new Utils(this.personModel);
     await utils.sorted();
     
@@ -23,8 +23,14 @@ export class DrawService {
       const paramsEmailService = {
         to: person.email,
         friend: person.friend
+      }
+      try {
+        emailService.execute(paramsEmailService);
+      } catch (error) {
+        console.log('ERROR IN EMAIL SERVICE', error);
+        return new HttpException('It was not possible to carry out the draw.', HttpStatus.INTERNAL_SERVER_ERROR)
       }        
-      emailService.execute(paramsEmailService);
+      
     }));
   
     return 'Draw successful.';
