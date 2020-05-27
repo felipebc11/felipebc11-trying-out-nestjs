@@ -10,18 +10,18 @@ constructor(
   private readonly personModel: Model<IPerson>
 ){}
 
-  randOrd = () => {
+  private readonly randOrd = (): number => {
     return (Math.round(Math.random())-0.5);
   }
 
-  async capturePersons() {
+  private readonly capturePersons = async (): Promise<any> =>{
     const persons = await this.personModel.find();
 
     const personsMapped = persons.map(person => person.name);
     return personsMapped.sort(this.randOrd);
   }
 
-  sorted = async (): Promise<any> => {
+  readonly sorted = async (): Promise<any> => {
     const nameMarticipants = await this.capturePersons();
   
     nameMarticipants.map(async (name: string, index: number) => {

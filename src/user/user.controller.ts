@@ -12,7 +12,7 @@ export class UserController {
     @Body('email') email: string,
     @Body('username') username: string,
     @Body('password') password: string,
-  ) {
+  ): Promise<any> {
     const generatedId = await this.usersService.create(
       email,
       username,
@@ -25,7 +25,7 @@ export class UserController {
   @Get('findByUsername')
   async findOne(
     @Body('username') userId: string,
-  ){
+  ): Promise<any>{
     return this.usersService.findOne(userId);
   }
 }

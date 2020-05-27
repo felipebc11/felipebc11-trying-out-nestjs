@@ -11,7 +11,7 @@ export class PersonController {
   async addPerson(
     @Body('name') name: string,
     @Body('email') email: string
-  ) {
+  ): Promise<any> {
     const generateId = await this.personsService.create(
       name,
       email
@@ -21,7 +21,7 @@ export class PersonController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getAll(){
+  async getAll(): Promise<any>{
     return this.personsService.fetchAll();
   }
 
@@ -29,7 +29,7 @@ export class PersonController {
   @Get('findById/:id')
   async findOne(
     @Param('id') userId: string,
-  ){
+  ): Promise<any> {
     return this.personsService.findOne(userId);
   }
 
@@ -40,7 +40,7 @@ export class PersonController {
     @Body('name') name: string,
     @Body('email') email: string,
     @Body('friend') friend: string,
-  ){
+  ): Promise<any> {
     return this.personsService.updatePerson(personId, name, email, friend);
   }
 
@@ -48,7 +48,7 @@ export class PersonController {
   @Delete('delete/:id')
   async deletePerson(
     @Param('id') personId: string,
-  ){
+  ): Promise<any> {
     return this.personsService.removePerson(personId);
   }
 }

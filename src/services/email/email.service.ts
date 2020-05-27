@@ -8,11 +8,11 @@ export class EmailService {
     this.config();
   }
 
-  config(){
+  private config(){
     sgMail.setApiKey(process.env.APIKEY_SENDGRID);
   }
 
-  async execute({ to, friend }){
+  readonly execute = async ({ to, friend }): Promise<any> => {
     const msg = {
       to,
       from: 'felipebc11@gmail.com',
@@ -23,7 +23,8 @@ export class EmailService {
     try {
       await sgMail.send(msg);
     } catch (error) {
-      console.log('ERRO', error);
+      console.log('ERROR IN EMAIL SERVICE', error);
+      return error;
     }
     
   }

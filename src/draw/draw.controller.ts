@@ -8,7 +8,7 @@ export class DrawController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async makeDraw(){
+  async makeDraw(): Promise<any>{
     return this.drawService.draw();
   }
 }
