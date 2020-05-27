@@ -83,7 +83,7 @@ export class PersonService {
   }
 
   async removePerson(id: string){
-    const result =await this.personModel.deleteOne({_id: id});
+    const result = await this.personModel.deleteOne({_id: id});
     if(result.deletedCount>0) return {message: 'Sucess.'};
     throw new HttpException('No records found by this id.', HttpStatus.NOT_FOUND);
   }

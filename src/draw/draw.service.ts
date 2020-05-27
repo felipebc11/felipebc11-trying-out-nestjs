@@ -1,0 +1,33 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+import { Utils } from './utils';
+import { IPerson } from '../interfaces/person.interface';
+import { EmailService } from '../services/email/email.service';
+
+@Injectable()
+export class DrawService {
+  constructor (
+    @InjectModel('Person')
+    private readonly personModel: Model<IPerson>,
+  ) {}
+
+  readonly draw = async () => {
+    const utils = new Utils(this.personModel);
+    await utils.sorted();
+    
+    const persons = await this.personModel.find();
+    const emailService = new EmailService();
+    persons.map((person => {
+      const paramsEmailService = {
+        to: person.email,
+        friend: person.friend
+      }        
+      emailService.execute(paramsEmailService);
+    }));
+  
+    return 'Draw successful.';
+  }
+
+}
